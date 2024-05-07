@@ -1,46 +1,248 @@
-# Getting Started with Create React App
+Проект react-template-typescript. В нем будут рассмотренны типизация: Props, Event, Router, Hooks, Requests.
+# ВТОРАЯ ЧАСТЬ react-template-typescript-hooks-rrd.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Статическая типизация в React TypeScript предоставляет несколько преимуществ:
+ 1. Предотвращение ошибок на этапе компиляции.
+ 2. Улучшенная поддержка IDE. Полноценное использование автокомплита.
+ 3. Более читаемый и понятный код.
+ 4. Легкое рефакторинг и поддержка кодовой базы.
+ 5. Большая экосистема и поддержка.
 
-## Available Scripts
+### Автокомплит (или автозаполнение) - это функциональность, которая предлагает варианты завершения кода или предлагает доступные методы, свойства и переменные во время разработки. При использовании React с TypeScript автокомплит может быть особенно полезным, так как TypeScript предоставляет статическую типизацию, что позволяет IDE (интегрированной среде разработки) предлагать точные варианты автозаполнения на основе типов данных.
 
-In the project directory, you can run:
+Когда вы пользуетесь **автокомплитом** при разработке **React** с использованием **TypeScript**, вы можете получить следующие преимущества:
+ 1. Предложение доступных методов и свойств: **Автокомплит может предлагать доступные методы и свойства для компонентов React**, основываясь на типах данных, определенных в TypeScript. Например, если у вас есть компонент с пропсами, автокомплит может предложить доступные свойства для этих пропсов.
 
-### `npm start`
+ 2. Проверка типов: **TypeScript позволяет определить типы данных для компонентов, пропсов и состояний**. При использовании автокомплита, IDE может предлагать только те методы и свойства, которые соответствуют определенным типам данных. Это помогает избежать ошибок типизации и облегчает разработку.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ 3. Улучшенная производительность: Благодаря автокомплиту, разработчики могут **быстрее находить нужные методы и свойства**, что улучшает производительность и сокращает время разработки.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ 4. Лучшая документация: **Автокомплит может предлагать документацию и подсказки по использованию методов и свойств**, что помогает разработчикам быстрее понять, как использовать различные функции и компоненты.
 
-### `npm test`
+ 5. Всегда знать какие поля есть у объекта.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Синтетические события.
+ **React оборачивает события в синтетические события**, чтобы обеспечить кроссбраузерность и упростить работу событий в React-компонентах. Синтетические события являются обертками над нативными браузерными событиями и предоставляют единый интерфейс для работы событий в разных браузерах.
 
-### `npm run build`
+ **Синтетические события в React имеют такие же свойства и методы, как и нативные события, но с некоторыми дополнительными возможностями**. Они позволяют легко обрабатывать события, делегировать их обработку на разные компоненты и управлять состоянием приложения.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ **Для работы с синтетическими событиями в React вы можете использовать специальные атрибуты, такие как onClick, onChange, onSubmit и другие, чтобы определить обработчики событий в компонентах**. В обработчиках событий вы можете получить доступ к событию и его свойствам, таким как target, currentTarget, preventDefault и другим.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ **Для использования синтетических событий в React с TypeScript вам необходимо правильно типизировать обработчики событий**. Вместо использования общего типа Event для событий, вы можете использовать более конкретные типы событий, такие как MouseEvent, ChangeEvent, FormEvent и другие, в зависимости от типа события, с которым вы работаете. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Например:
+```typescript
+function inputHandler(event: InputEvent){
+   event.target.value
+   event.preventDefault()
+   event.stopPropagation()
+}
+```
+ Если мы типизируем event то сможем увидить нужные поля с помощью **автокомплита**.
 
-### `npm run eject`
+ Для указания **типов props** в компоненте React с TypeScript вы можете использовать **интерфейсы или типы**. В интерфейсах вы можете определить ожидаемые свойства и их типы, а в типах вы можете использовать синтаксис записи типов. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Например:
+```typescript
+interface UserListProps{
+ users: IUser[];
+ onClick: () => void;
+ maxCount: number;
+}
+const userList: FunctionComponent = (props: UserListProps)
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Минимальная конфигурация для запуска пустого приложения.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+ 1. Установка **node.js** + **npm**
+ 2. Установка **React TypeScript** через терминал: **npx create-react-app . --template typescript**
+ 3. Команда для **запуска** в терминале: **npm start**
+ 4. В файле **index.html** очищаем все, кроме базовой структуры
+ 5. В папке **src** удаляем все файлы кроме **index.tsx** и **App.tsx**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Корректируем файлы:
+### Файл index.tsx:
+```typescript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-## Learn More
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+    <App />
+);
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Файл App.tsx:
+```typescript
+import React from 'react';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function App() {
+  return (
+    <div className="App">
+    </div>
+  );
+}
+
+export default App;
+```
+### Минимальная конфигурация для запуска пустого приложения готова.
+
+## 1. КОМПОНЕНТ И ЕГО ТИПИЗАЦИЯ. userList. ОБЩИЕ ТИПЫ IUser, IAddress.
+    1.  Создаем папку для компонентов components.
+    2.  Создаем компонент UserList.jsx.
+    3.  Тип компонента FC. Его импортируем из react: import { FC } from "react";
+    4.  В дженерике указываем интерфейс UserListProps.
+    5.  Создаем интерфейс UserListProps. В интерфейсе нужно указать только список пользователей.
+    6.  Интерфейс списка пользователей сделаем глобальным. Создадим папку types. В нем создаем файл types.tsx. В этом файле будем описывать глобальные типы, которые будут использоваться в разных частях приложения.
+    7.  Создадим интерфейс для пользователя. В нем мы опишем поля, которые будут у объекта пользователя.
+    8.  Список пользователя будем получать с бэкэнда jsonplaceholder. Поля приходящие с этого АПИ: id: number, name: string, email: string, address: IAddress.
+    9.  address - это вложенный объект. Для него мы создадим отдельный интерфейс: interface IAddress{}. Заберем часть полей так же из jsonplaceholder: street: string, city: string, zipcode: string.
+    10. Возвращаемся в компонент UserList и указываем в типе пропсов: users: IUser[];.
+    11. Внутри блока div проитерируемся по списку пользователей: <div key={user.id}>{user.id}. {user.name} проживает в городе {user.address.city} на улице{" "}{user.address.street}</div>.
+    12. Добавим минимальные стили: style={{padding: 15, border: "1px solid gray"}}.
+    13. Переходим в App и добавляем компонент UserList.
+    14. Передаем один пропс - это массив пользователей.
+    15. Создадим пока статические данные для массива пользователей:
+```typescript
+const users: IUser[] = [
+    {
+      id: 1,
+      name: "Leanne Graham",
+      email: "Sincere@april.biz",
+      address: {
+        street: "Kulas Light",
+        city: "Gwenborough",
+        zipcode: "92998-3874",
+      },
+    },
+    {
+      id: 2,
+      name: "Graham Lyam",
+      email: "Hydkpe@april.biz",
+      address: {
+        street: "Light Street",
+        city: "Gwenborough",
+        zipcode: "92998-3874",
+      },
+    },
+  ];
+
+Чуть позже будем получать этот массив из запроса на сайт.
+```
+
+## 2. USERITEM.
+    1. Сделаем декомпозицию: Вынесем из компонента UserList отдельно взятого пользователя в компонент UserItem.
+    2. Создаем файл UserItem.jsx 
+    3. Разворачиваем компонент.
+    4. Указываем что он функциональный (FC).
+    5. Как дженерик (обобщающий тип) передаём <UserItemProps>
+```
+В TypeScript дженерик представляет собой механизм, который позволяет создавать обобщенные типы или функции, которые могут работать с различными типами данных. Он позволяет создавать компоненты, которые могут быть параметризованы типами данных, чтобы обеспечить повторное использование кода и обеспечить безопасность типов.
+```
+    6. Создаем UserItemProps интерфейс.
+    7. Этот компонент будет ожидать на вход один пропс user: IUser - самого пользователя.
+    8. Указываем пользователя в пропсах компонента: const UserItem: FC<UserItemProps> = ({user}) =>
+    9. Переносим реализацию из компонента UserList. Убираем ключ, его нужно будет добавить при map.
+    10. Переходим обратно в UserList. Внутри users.map прописываем компонент UserItem.
+    11. Аргументами туда передаем key={user.id} и user={user}.
+
+## 3. ТИПИЗАЦИЯ ЗАПРОСА axios. ТИПИЗАЦИЯ ХУКА UseState
+    1.  Получение списка пользователей с сервера. Возвращаемся в компонент App.
+    2.  Удаляем массив со статическими пользователями.
+    3.  Создаем состояние: const [users, setUsers] = useState([]).
+    4.  Для определения типа, который должен быть внутри состояния мы указываем дженерик(обобщающий тип) и передаем туда масив интерфейса пользователя: const [users, setUsers] = useState<IUser[]>([]); После такой записи поместить в тип users другое состояние мы не сможем.
+    5.  Устанавливаем библиотеку axios для запроса к серверу: npm install axios.
+    6.  Для асинхронного запроса воспользуемся хуком useEffect, что бы при первом рендере страницы этих пользователей получить: useEffect(() => {})
+    7.  Создадим функцию с помощью которых пользователей будем получать: async function fetchUsers(){}.
+    8.  Обернем функционал функции в try catch что бы отлавливать потенциальные ошибки. Если ошибка произошла будем выводить ее в алерт.
+    9.  Внутри блока try делаем запрос (переменная response). Импортируем axios. Вызываем get запрос с url "https://jsonplaceholder.typicode.com/users" и то, что мы получили от сервера нам необходимо поместить в состояние users: const response = await axios.get( "https://jsonplaceholder.typicode.com/users" ); setUsers(response.data) .
+    10. Для запроса get установим дженерик IUser[], что бы понимать какие данные мы получаем.
+    11. Функцию fetchUsers вызываем внутри useEffect().
+   
+## 4. ПЕРЕИСПОЛЬЗУЕМЫЙ КОМПОНЕНТ List. Generics, ОБОБЩЕННЫЕ ТИПЫ В TYPESCRIPT.
+    1.  Создадим универсальный компонент который будет является списком для разных типов. С помощью него мы одновременно можем отрисовывать и список пользователей и список постов и в принципе любой другой список.
+    2.  Создаем в папке components файл List.tsx .
+    3.  Разворачиваем компонент через обычную функцию: export default function List(props: ListProps).
+    4.  В Пропсах указываем тип пропсов: ListProps<T>
+    5.  Создаем для этого интерфейс ListProps.
+    6.  Для ListProps указываем свой дженерик - это может быть абсолютно любой тип ListProps<T>.
+    7.  На входе в компонент мы ожидаем массив элементов. Они могут быть абсолютно любого типа: items: T[];.
+    8.  Вторым пропсом будет компонент, который необходимо отрисовать. У нас такой компонент есть, и он называется UserItem. Компонент в свою очередь является функцией, которая возвращает ReactNode: renderItem: (item: T) => React.ReactNode;.
+    9.  Тип, который будет передаваться в компонент нужно так же указать самому компоненту: export default function List<T>(props: ListProps<T>).
+    10. Внутри компонента мы возвращаем элемент div внутри которого мы с помощью функции map пробегаемся по item'ам, который достаем из пропсов и как callback в функцию map мы передаем функцию renderItem из props: return (<div>{props.items.map(props.renderItem)}</div>).
+    11. Переходим в компонент App и вместо UserList используем компонент List и в него передаем в качестве items массив пользователей и в качестве renderItem передать функцию, которая будет возвращать компонент. Эта функция параметром принимает одного пользователя типа IUser и возвращает компонент UsetItem который мы реализовали. Как пропс прокидываем параметр user, как ключ параметр user.id.
+    12. Компонент UserList можно удалять.
+    13. Todos. Сделаем в файле types еще один переиспользуемый интерфейс для todo, т.е. для элемента из списка дел. Брать todo мы так же можем с jsonplaceholder: https://jsonplaceholder.typicode.com/todos.
+    14. Это объекты состоящие из четырех полей: userId - это поле не нужно для реализации нашего проекта;id: number; title: string; completed: boolean.
+    15. Переходим в компонент App.
+    16. Копируем функцию fetchUsers. Называем функцию fetchTodos. Меняет ожидаемый тип в axios.get на ITodo[].
+    17. Создаем состояние для todos: const [todos, setTodos] = useState<ITodo[]>([]);.
+    18. В функции fetchTodos вызываем функцию setTodos вместо setUsers.
+    19. Изменим url. Ограничим количество параметров todo с сервера в 10 штук с помощью query параметров: https://jsonplaceholder.typicode.com/todos?_limit=10 .
+    20. В useEffect вызываем функцию fetchTodos.
+    21. Создаем компонент TodoItem, в который будем помещать информацию из запроса.
+    22. Создаем функциональный компонент: const TodoItem: FC<TodoItemProps> = () =>
+    23. Создаем интерфейс: Этот компонент будет ожидать всего один пропс - это todo с типом ITodo.
+    24. Указываем todo и в самом компоненте: const TodoItem: FC<TodoItemProps> = ({todo}).
+    25. Внутри div помещаем id todo, название: {todo.id}. {todo.title}.
+    26. Далее добавляем инпут, как тип указываем checkbox, И как пропс checked передадим поле completed: <input type="checkbox" checked={todo.completed} />
+    27. Переходим в файл App и добавим новый список.
+    28. В качестве items передаем todo.
+    29. Возвращаемый компонент теперь - TodoItem. У него другие пропсы: <List items={todos} renderItem={(todo: ITodo) => <TodoItem todo={todo} key={todo.id} />}/>.
+
+## 5. ТИПИЗАЦИЯ react-router-dom. useNavigate(useHistory), useParams, BrowserRouter.
+    1.  Устанавливаем react-router-dom, и сразу установим для него типы: npm i react-router-dom @types/react-router-dom.
+    2.  Переходим в компонент App.
+    3.  Импортируем BrowserRouter Routes Route из react-router-dom.
+    4.  Для начала сделаем декомпозицию нашего приложения. Создаем компонент UserPage.tsx.
+    5.  Разворачиваем компонент.
+    6.  Тип компонента - FC.
+    7.  В этот компонент переносим часть логики. Запрос fetchUsers и функция useEffect вместе с состоянием users, setUsers. Из useEffect убираем функцию setTodo.
+    8.  Далее переносим разметку <List>.
+    9.  Создаем вторую страницу, которую называем TodosPage.tsx.
+    10. Разворачиваем компонент.
+    11. Указываем, что это функциональный компонент.
+    12. Переносим из App в TodosPage  list  с todo'шками.
+    13. Далее копируем запрос, useEffect, состояние относящиеся к todo.
+    14. Теперь у нас две независимые страницы, и для них необходимо указать маршруты. Переходим в компонент App.
+    15. Удалим код с карточками и EventsExample.
+    16. Оборачиваем приложение в BrowserRouter и Routes. И прописываем маршруты.
+    17. Создадим два маршрута: <Route path="/users" element={<UserPage />} /> и <Route path="/todo" element={<TodosPage />} />.
+    18. Сделаем навигационную панель, куда добавим две ссылки Link: <Link to="/users">Пользователи</Link> и <Link to="/todos">Список дел</Link>.
+    19. Создаем еще один компонент для отдельной страницы пользователя: UserItemPage.tsx. При нажатии на пользователя нас будет перебрасывать на его страницу.
+    20. Сделаем маршрут для этой страницы в App.
+    21. Путь у этой страницы будет с динамическим id.
+    22. И компонент для отрисовки будет называться UserItemPage.
+    23. И так же сделаем маршрут для одной todo.
+    24. Сделаем компонент TodoItemPage.
+    25. Начнем реализацию для страницы пользователей. Необходимо данные о пользователе подгрузить. Копируем логику подгрузки из UserPage.tsx .
+    26. Поменяем состояние на user, setUser. Убираем массив из типа состояния. Пользователь может быть либо IUser или null. и по дефолту состояние будет тоже null.
+    27. Функция для загрузки пользователя будет называться fetchUser.
+    28. Убираем массив из типа в get.
+    29. Поменяем url, теперь в адрес мы добавляем id пользователя.
+    30. id мы будем доставать из строки запроса. Для этого предназначен хук useParams, который находится в пакете react-router-dom. импортируем его.
+    31. Создаем переменную params = useParams().
+    32. Как дженерик в хук useParams мы указываем что будем получать: useParams<{id: string}>().
+    33. И этот params.id мы достаем и добавляем к строке запроса.
+    34. Создадим кнопку на этой странице "Назад". Она будет возвращать к списку пользователей.
+    35. Далее сделаем заголовок где напишем: Страница пользователя {user?.name}.
+    36. Далее внутри блока div напишим любую информацию о пользователе, например: {user?.email} и его адрес {user?.address.city} {user?.address.street} {user?.address.zipcode}.
+    37. Реализуем динамические изменения при нажатии на пользователя и на кнопку Назад. Для этого нам понадобится хук useNavigate.
+    38. Создаем переменную navigate = useNavigate().
+    39. Повесим слушатель события нажатие на кнопку Назад: <button onClick={() => navigate("/users")}>Назад</button>.
+    40. Функционал нажатия на конкретного пользователя. Переходим в компонент UserItem и добавим в интерфейс функцию onClick.
+    41. Эта функция параметром будет принимать пользователя user: IUser и возвращать она будет ничего (void).
+    42. Вешаем слушатель события на корневой блок div.
+    43. В нем мы вызываем функцию которую мы получаем в пропсах. Так же указываем ее в параметрах в компоненте.
+    44. И параметром туда передаем пользователя user.
+    45. Переходим в компонент UsersPage.tsx.
+    46. В UserItem у нас появляется теперь пропс onClick. Прописываем его. Передаем в него стрелочную функцию и тут нам понадобится хук useNavigate.
+    47. Создаем переменную navigate = useNavigate().
+    48. В стрелочной функции вызываем navigate() с параметром "/users/" + user.id.
+    49. Этого user мы получаем в самом callback'е.
+    50. Можно поправить код на который ругается реакт добавив в пропсы функцию, либо протсо удалить эту страницу, потому что мы ее уже не используем.
+   
+## ПЕРВАЯ ЧАСТЬ ПРОЕКТА С CARD DRAG-AND-DROP: https://github.com/Mikey191/react-template-typescript-inputs-dad
